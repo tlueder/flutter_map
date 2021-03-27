@@ -52,6 +52,15 @@ class MapControllerImpl implements MapController {
   }
 
   @override
+  CenterZoom centerZoomFitBounds(
+    LatLngBounds bounds, {
+    FitBoundsOptions options =
+        const FitBoundsOptions(padding: EdgeInsets.all(12.0)),
+  }) {
+    return _state.centerZoomFitBounds(bounds, options);
+  }
+
+  @override
   bool get ready => _state != null;
 
   @override
@@ -339,6 +348,14 @@ class MapState {
     }
     var target = getBoundsCenterZoom(bounds, options);
     move(target.center, target.zoom);
+  }
+
+  CenterZoom centerZoomFitBounds(
+      LatLngBounds bounds, FitBoundsOptions options) {
+    if (!bounds.isValid) {
+      throw Exception('Bounds are not valid.');
+    }
+    return getBoundsCenterZoom(bounds, options);
   }
 
   LatLng getCenter() {
