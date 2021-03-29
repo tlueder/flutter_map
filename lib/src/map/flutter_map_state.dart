@@ -22,11 +22,7 @@ class FlutterMapState extends MapGestureMixin {
   MapState mapState;
 
   FlutterMapState(MapController mapController)
-      : mapController = mapController ?? MapController() {
-    if (options.onMapCreated != null) {
-      options.onMapCreated(mapController);
-    }
-  }
+      : mapController = mapController ?? MapController();
 
   @override
   void didUpdateWidget(FlutterMap oldWidget) {
@@ -42,6 +38,11 @@ class FlutterMapState extends MapGestureMixin {
       if (mounted) setState(() => {});
     }, mapController.mapEventSink);
     mapController.state = mapState;
+
+    // Callback onMapCreated if not null
+    if (options.onMapCreated != null) {
+      options.onMapCreated(mapController);
+    }
   }
 
   void _disposeStreamGroups() {
