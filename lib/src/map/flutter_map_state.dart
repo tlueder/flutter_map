@@ -22,7 +22,11 @@ class FlutterMapState extends MapGestureMixin {
   MapState mapState;
 
   FlutterMapState(MapController mapController)
-      : mapController = mapController ?? MapController();
+      : mapController = mapController ?? MapController() {
+    if (options.onMapCreated != null) {
+      options.onMapCreated(mapController);
+    }
+  }
 
   @override
   void didUpdateWidget(FlutterMap oldWidget) {
